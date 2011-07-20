@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="description" content="Slim is a template language whose goal is reduce html syntax to the essential parts without becoming cryptic."/>
+    <link href="css/slim.css" media="screen" rel="stylesheet" type="text/css"/>
+    <title>Slim</title>
+  </head>
+
+  <body>
+    <div id="side">
+      <div class="wrap">
+        <h1>Slim > Home</h1>
+        <h2 id="slogan">A lightweight templating engine</h2>
+        <ul id="links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="docs.html" class="active">Docs</a></li>
+          <li><a href="logic-less.html">Logic-less</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
+          <li class="last"><a href="http://rdoc.info/github/stonean/slim/master/frames">API</a></li>
+        </ul>
+        <p><a href="https://github.com/stonean/slim" class='github'>stonean<span>/</span><strong>slim</strong></a></p>
+      </div>
+    </div>
+    
+    <div id="main">
+      <div class="wrap pad">
+        
+
+        <h3 class="first">Slim Docs</h3>
+        <h4>Install:</h4>
+        <pre><code>$ gem install slim</code></pre>
+
+        <p>In your Gemfile (Rails)</p>
+        <pre><code><span class='keyword'>gem</span> <span class='string'>'slim'</span>, <span class="symbol">:require</span> =&gt; <span class="string">'slim'</span></code></pre>
+
+        <hr/>
+        <h4>Options:</h4>
+        <pre><code><span class="comment"># Output pretty (indented) format
+# For Rails, you'd probably want this line in
+# config/environments/development.rb</span>
+<span class="constant">Slim</span>::<span class="constant">Engine</span>.set_default_options <span class="symbol">:pretty</span> => <span class="keyword">true</span></code></pre>
+    <p>Just use the .slim extension on your templates and you're good to go. <br> Now on to the syntax...</p>
+
+        <hr/>
+        <h4>doctype declarations:</h4>
+          <pre><code>
+<span class="comment">/ XHTML DOCTYPES </span>
+
+<span class="tag">doctype</span> html     
+  <span class="comment">&lt;!DOCTYPE html&gt;</span>
+
+<span class="tag">doctype 5</span>
+  <span class="comment">&lt;!DOCTYPE html&gt;</span>
+
+<span class="tag">doctype</span> 1.1       
+  <span class="comment">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;</span>
+
+<span class="tag">doctype</span> strict
+  <span class="comment">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+</span>
+<span class="tag">doctype</span> frameset
+  <span class="comment">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"&gt;</span>
+
+<span class="tag">doctype</span> mobile
+  <span class="comment">&lt;!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN"
+    "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd"&gt;</span>
+
+<span class="tag">doctype</span> basic
+  <span class="comment">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
+    "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd"&gt;</span>
+
+<span class="tag">doctype</span> transitional
+  <span class="comment">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span>
+
+<span class="comment">/ HTML 4 DOCTYPES</span>
+
+<span class="tag">doctype</span> strict
+  <span class="comment">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"&gt;</span>
+
+<span class="tag">doctype</span> frameset
+  <span class="comment">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
+    "http://www.w3.org/TR/html4/frameset.dtd"&gt;</span>
+
+<span class="tag">doctype</span> transitional
+  <span class="comment">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
+      </code></pre>
+
+        <hr/>
+        <h4>Static content on same line:</h4>
+        <pre><code><span class="tag">h1</span> This is my header</code></pre>
+
+        <hr/>
+        <h4>Nest static content:</h4>
+          <pre><code><span class="tag">h1</span>
+  | This is my header</code></pre>
+        <p>Single apostrophe can be used in place of pipe if you want to ensure that a single whitespace is appended.</p>
+        <pre><code>' This is a link to
+    <span class="tag">a</span> href=<span class="string">'http://ruby-lang.org'</span> Ruby</code></pre>
+        
+
+        <hr/>
+        <h4>Nest static content over multiple lines:</h4>
+          <pre><code><span class="tag">p</span>
+  | I have a lot to say ..
+    Too much for one line
+    And so on...
+          </code></pre>
+          <p>The space after the pipe becomes your left margin. Any additional leading spaces will be carried over.</p>
+        <hr/>
+        <h4>Dynamic Content</h4>
+          <pre><code><span class="tag">h1</span> = page_header</code></pre>
+          <p>Can also nest the call.</p>
+          <pre><code><span class="tag">h1</span>
+  = page_header</code></pre>
+          <p>Using Rails capture.</p>
+          <pre><code>= <span class="keyword">capture</span> <span class="filter">:javascript</span> <span class="keyword">do</span>
+  alert(<span class="string">'Hello'</span>);</code></pre>
+
+        <hr/>
+        <h4>Control logic (as you would expect):</h4>
+          <pre><code>- <span class="keyword">if</span> logged_in?
+  <span class="tag">li</span> = link_to(<span class="string">"Logout"</span>, logout_path)
+- <span class="keyword">else</span>
+  <span class="tag">li</span> = link_to(<span class="string">"Login"</span>, login_path) </code></pre>
+
+        <hr/>
+        <h4>Dynamic content in attribute</h4>
+          <pre><code><span class="tag">a</span> href=<span class="string">"</span><span class="interpolation">#{</span>url_for <span class="instancevar">@user</span><span class="interpolation">}</span><span class="string">"</span> = <span class="instancevar">@user</span>.name</code></pre>
+          <p>An attribute without quotes is deemed dynamic!</p>
+          <pre><code><span class="tag">a</span> href=url_for(<span class="instancevar">@user</span>) = <span class="instancevar">@user</span>.name</code></pre>
+
+        <hr/>
+        <h4>Optional attribute wrappers: {...}, [...], (...)</h4>
+          <pre><code><span class="tag">h1</span>{class=page_header_class} = page_header</code></pre>
+          <pre><code><span class="tag">h1</span>[class=page_header_class] = page_header</code></pre>
+          <pre><code><span class="tag">h1</span>(class=page_header_class) = page_header</code></pre>
+
+        <hr/>
+        <h4>Optional attribute value wrappers: {...}, [...], (...)</h4>
+          <pre><code><span class="tag">h1</span>{class=(page_header_class)} = page_header</code></pre>
+          <pre><code><span class="tag">h1</span>[class={page_header_class}] = page_header</code></pre>
+          <pre><code><span class="tag">h1</span>(class=[page_header_class]) = page_header</code></pre>
+          <p>The outer wrapper is not required.</p>
+          <pre><code><span class="tag">h1</span> class=(page_header_class) = page_header</code></pre>
+          <pre><code><span class="tag">h1</span> class={page_header_class} = page_header</code></pre>
+          <pre><code><span class="tag">h1</span> class=[page_header_class] = page_header</code></pre>
+          <p>Use whatever reads best for you!</p>
+
+        <hr/>
+        <h4>Evaluate Ruby code in text</h4>
+          <pre><code><span class="tag">h1</span> Welcome <span class="interpolation">#{</span>current_user.name<span class="interpolation">}</span> to Slim!</code></pre>
+          <p>To bypass the interpolation (i.e. render as is)</p>
+          <pre><code><span class="tag">h1</span> Welcome \#{current_user.name} to Slim!</code></pre>
+
+        <br/>
+        <h4 class="note">Slim escapes html by default!</h4>
+        <p>Rails provides an html_safe? method that Slim takes advantage of, but when rendering partials, you'll need to use the double equal to bypass the escape html functionality:</p>
+        <pre><code>== <span class="keyword">render</span> =&gt; <span class="symbol">:partial</span>, <span class="string">'user'</span></code></pre>
+        <p>To bypass escaping with interpolation:</p>
+        <pre><code><span class="tag">p</span> Current location: <span class="interpolation">#{{</span>request.path<span class="interpolation">}}</span></code></pre>
+        
+        <hr/>
+        <h4>Haml like shortcuts:</h4>
+          <pre><code><span class="tag">#myid</span><span class="htmlclass">.myclass.myclass2</span> My example</code></pre>
+           <p>renders:</p>
+          <pre><code><code>&lt;div id="myid" class="myclass myclass2"&gt;My example&lt;/div&gt;</code></code></pre>
+
+        <hr/>
+        <h4>Code comments (use a forward slash):</h4>
+          <pre><code><span class="comment">/ This is my comment, it will not be included on output</span>
+<span class="tag">p</span> This is my content</code></pre>
+          <p>Can also nest comments.</p>
+          <pre><code><span class="comment">/ This is my comment, it will not be included on output
+  This is another comment line because I'm nested!</span>
+<span class="tag">p</span> This is my content</code></pre>
+
+        <hr/>
+        <h4>Span multiple lines (use a back slash):</h4>
+          <pre><code>= javascript_include_tag <span class="string">'jquery'</span>,      \
+                         <span class="string">'jquery-ui'</span>,   \
+                         <span class="string">'application'</span></code></pre>
+
+        <hr/>
+        <p>Thanks to <a href="http://github.com/rtomayko/tilt">Tilt</a>, Slim has impressive support for embedding other template engines:</p>
+          <pre><code>ENGINE                     FILTER            REQUIRED LIBRARIES
+-------------------------- ----------------- ----------------------------
+Ruby                       ruby:             none 
+Javascript                 javascript:       none 
+CSS                        css:              none 
+ERB                        erb:              none
+Haml                       haml:             haml
+Sass                       sass:             haml
+Scss                       scss:             haml
+Less CSS                   less:             less
+Builder                    builder:          builder
+Liquid                     liquid:           liquid
+RDiscount                  markdown:         rdiscount
+RedCloth                   textile:          redcloth
+RDoc                       rdoc:             rdoc
+Radius                     radius:           radius
+Markaby                    markaby:          markaby
+Nokogiri                   nokogiri:         nokogiri
+CoffeeScript               coffee:           coffee-script (+node coffee) </code></pre>
+        <p><small>The following engines are embedded:</small><br/>
+          <strong>javascript, css, ruby</strong></p>
+        <p><small>The following engines are executed at compile time:</small><br/>
+          <strong>embedded ruby is interpolated: markdown, textile, rdoc</strong></p>
+        <p><small>The following engines are executed at compile time:</small><br/>
+          <strong>coffee, sass, scss, less</strong></p>
+        <p><small>The following engines are precompiled, code is embedded:</small><br/>
+          <strong>erb, haml, nokogiri, builder</strong></p>
+        <p><small>The following engines are completely executed at runtime (<em>Usage not recommended, no caching!</em>):</small><br/>
+          <strong>liquid, radius, markaby</strong></p>
+
+          <pre><code><span class="filter">coffee:</span>
+  <span class="tag">square</span> = (x) <span class="keyword">-></span> x <span class="filter">*</span> x </code></pre>
+          <pre><code><span class="filter">markdown:</span>
+  <span class="tag">#Header</span>
+    Hello from <span class="interpolation">#{</span><span class="string">"Markdown!"</span><span class="interpolation">}</span>
+    Second Line!</code></pre>
+    <p class="foot">
+      Source: <a href="http://github.com/stonean/slim">stonean/slim</a>&nbsp;|&nbsp;Slim logo &amp; site design by <a href="http://github.com/activestylus">activestylus</a><br/>
+    </p>
+    </div>
+  </div>
+  <a id="forkme" href="http://github.com/stonean/slim">Fork me on Github</a>
+  <script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-19270476-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>
