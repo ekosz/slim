@@ -270,7 +270,7 @@ p.foot.up {
 h4.note {padding:20px 30px 20px 70px;background:#b30 url(../img/warning.png) no-repeat 30px center;font-weight:bold;}
 a {outline:none}
 
-@media only screen and (min-width: 480px) {
+@media only screen and (min-width: 650px) {
   body {
     min-width:960px;
   }
